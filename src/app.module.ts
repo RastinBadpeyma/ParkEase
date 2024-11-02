@@ -6,6 +6,7 @@ import ormConfig from './config/orm.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import ormConfigProd from './config/orm.config.prod';
 import { AuthModule } from './auth/auth.module';
+import { ParkingSpacesModule } from './parking-spaces/parking-spaces.module';
 
 
 @Module({
@@ -20,6 +21,7 @@ import { AuthModule } from './auth/auth.module';
       ? ormConfig : ormConfigProd
     }),
     AuthModule,
+    ParkingSpacesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
