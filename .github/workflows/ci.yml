@@ -28,6 +28,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+       # Set up Docker Buildx (includes Docker Compose)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+
       # Start Docker Compose to set up services
       - name: Set up Docker Compose
         run: docker-compose up -d
