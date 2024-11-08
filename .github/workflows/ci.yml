@@ -2,59 +2,52 @@ name: CI with Docker Compose and Playwright Tests
 
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
-    branches: 
+    branches:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: ci
 
     steps:
-      # Check out the code from the repository
-      - name: Check out the code
-        uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      # Set up Node.js and install dependencies
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm ci
-
-       # Set up Docker Buildx (includes Docker Compose)
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v1
 
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          echo "/usr/local/bin" >> $GITHUB_PATH
 
-      # Start Docker Compose to set up services
-      - name: Set up Docker Compose
-        run: docker-compose up -d
-
-      # Wait for services to be ready
-      - name: Wait for services to be ready
-        run: sleep 10
-
-      # Run Playwright tests
-      - name: Run Playwright tests
-        run: npx playwright test
-
-      # Upload Playwright report
-      - name: Upload Playwright report
-        uses: actions/upload-artifact@v3
-        if: always()
+      - name: Cache Docker layers
+        uses: actions/cache@v3
         with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+          path: /tmp/.buildx-cache
+          key: ${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref_name }}
 
-      # Shut down Docker Compose
-      - name: Shut down Docker Compose
-        if: always()
-        run: docker-compose down
+      - name: Set environment variables
+        run: |
+          echo "MYSQL_ROOT_PASSWORD=root" >> .env
+          echo "POSTGRES_PASSWORD=password" >> .env
+
+      - name: Run Docker Compose
+        run: |
+          docker-compose up -d
+          sleep 15  # Wait for services to be fully ready
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test

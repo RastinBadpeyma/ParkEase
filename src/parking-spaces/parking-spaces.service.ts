@@ -1,4 +1,4 @@
-import { BadRequestException, Body, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {ParkingSpace } from './entities/parking-spaces.entity';
 import { Repository } from 'typeorm';
@@ -33,7 +33,7 @@ export class ParkingSpacesService {
   async findAll(): Promise<ParkingSpace[]>{
     try {
       return await this.parkingspaceRepo.find();
-  } catch (error) {
+  } catch{
       throw new HttpException('Failed to fetch parking spaces', HttpStatus.INTERNAL_SERVER_ERROR);
   }
  }

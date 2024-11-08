@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
    async validate(payload: any) {
       try {
          return await this.userRepository.findOneByOrFail({ id: payload.sub });
-      } catch (error) {
+      } catch {
          throw new UnauthorizedException('User not found or invalid token.');
       }
    }   

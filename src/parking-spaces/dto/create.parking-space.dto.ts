@@ -1,4 +1,4 @@
-import { IsEnum, IsBoolean, IsNumber, Min, IsString, Matches } from 'class-validator';
+import {  IsBoolean, IsString, Matches } from 'class-validator';
 
 export class CreateParkingSpaceDto {
    @IsString()
