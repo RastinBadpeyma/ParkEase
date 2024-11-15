@@ -2,7 +2,7 @@ import { Injectable,UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { User } from "../entities/user.entity";
+import { User } from "../../users/entities/user.entity";
 import { Repository } from "typeorm";
 
 
@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
    async validate(payload: any) {
       try {
          return await this.userRepository.findOneByOrFail({ id: payload.sub });
-      } catch (error) {
+      } catch {
          throw new UnauthorizedException('User not found or invalid token.');
       }
    }   

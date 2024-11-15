@@ -9,7 +9,7 @@ import { CreateUserDto } from 'src/auth/input/create.user.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
   ){}
 
   async findAll() {
@@ -23,8 +23,8 @@ export class UsersService {
   }
 
    async createUser (createUserDto: CreateUserDto) {
-    const user = await this.userRepository.create(createUserDto);
-    this.userRepository.save(user);
+    const user = this.userRepository.create(createUserDto);
+    await this.userRepository.save(user);
     return user;
   }
 
