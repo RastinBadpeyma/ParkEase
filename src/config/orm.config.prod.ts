@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Profile } from 'src/auth/entities/profile.entity';
-import { User } from 'src/auth/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import { ParkingSpace } from 'src/parking-spaces/entities/parking-spaces.entity';
 
 

@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import ormConfigProd from './config/orm.config.prod';
 import { AuthModule } from './auth/auth.module';
 import { ParkingSpacesModule } from './parking-spaces/parking-spaces.module';
+import { UsersModule } from './users/users.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { ParkingSpacesModule } from './parking-spaces/parking-spaces.module';
     }),
     AuthModule,
     ParkingSpacesModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
