@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {ParkingSpace } from './entities/parking-spaces.entity';
 import { Repository } from 'typeorm';
@@ -13,7 +13,7 @@ export class ParkingSpacesService {
    private readonly parkingspaceRepo: Repository<ParkingSpace>
   ){}
 
-  async createParkingSpace(createParkingSpaceDto: CreateParkingSpaceDto){
+  async createParkingSpace(createParkingSpaceDto: CreateParkingSpaceDto) : Promise<ParkingSpace>{
    const existingParking = await this.parkingspaceRepo.findOne({
     where: {
       location: createParkingSpaceDto.location,
@@ -21,39 +21,52 @@ export class ParkingSpacesService {
    })
 
    if (existingParking) {
-     throw new BadRequestException('Parking space at this location is already occupied')
+     throw new BadRequestException('Parking space already exists at this location')
    }
    
-    const parkingSpace =  new ParkingSpace();
-     parkingSpace.location = createParkingSpaceDto.location;
-     parkingSpace.isOccupied = createParkingSpaceDto.isOccupied;
-     parkingSpace.pricePerHour = parkingSpace.pricePerHour;
+    // If no existing parking space found, proceed to create a new one
+    const newParkingSpace = this.parkingspaceRepo.create(createParkingSpaceDto);
+    return await this.parkingspaceRepo.save(newParkingSpace);
 
-     return await this.parkingspaceRepo.save(parkingSpace);
   }
 
-  async findAll(){
-    return await this.parkingspaceRepo.find()
+  async findAll(): Promise<ParkingSpace[]> {
+     return await this.parkingspaceRepo.find();
  }
 
  async findOne(id: number): Promise<ParkingSpace> {
-  return await this.parkingspaceRepo.findOne({
-      where: { id: id },
-  });
+  const parkingSpace = await this.parkingspaceRepo.findOne({ where: { id } });
+    
+    if (!parkingSpace) {
+        throw new HttpException('Parking space not found', HttpStatus.NOT_FOUND);
+    }
+
+    return parkingSpace;
 
  }
 
- async update(id:number , updateParkingSpaceDto: UpdateParkingSpaceDto ) {
-   const parkingSpace = await this.parkingspaceRepo.findOne({where: {id}});
-   return await this.parkingspaceRepo.save({
-    ...parkingSpace,
+ async update(id:number , updateParkingSpaceDto: UpdateParkingSpaceDto ):Promise<ParkingSpace> {
+  const parkingSpace = await this.parkingspaceRepo.preload({
+    id,
     ...updateParkingSpaceDto
-   });
+});
+
+if (!parkingSpace) {
+    throw new HttpException('Parking space not found', HttpStatus.NOT_FOUND);
+}
+
+return await this.parkingspaceRepo.save(parkingSpace);
  }
 
-   async delete(id:number){
-    const parkingSpace = await this.parkingspaceRepo.findOne({where: {id}});
-    return await this.parkingspaceRepo.remove(parkingSpace);
+   async delete(id:number) : Promise<string>{
+    const parkingSpace = await this.parkingspaceRepo.findOne({ where: { id } });
+    
+    if (!parkingSpace) {
+        throw new HttpException('Parking space not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.parkingspaceRepo.remove(parkingSpace);
+    return 'Parking space deleted successfully!';
    }
  
 
