@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Reservation } from "src/reservation/entities/reservation.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 //  ParkingLocation    GreenWichSt = "GreenWichSt",
@@ -25,5 +26,8 @@ export class ParkingSpace {
 
    @Column({default: false})
    pricePerHour: string;
+
+   @OneToMany(() => Reservation, reservation => reservation.parkingSpace) 
+   reservations: Reservation[];
 
 }

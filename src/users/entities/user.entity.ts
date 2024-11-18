@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Profile } from "../../auth/entities/profile.entity";
+import { Reservation } from "src/reservation/entities/reservation.entity";
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -23,6 +24,9 @@ export class User {
   @OneToOne(() => Profile)
   @JoinColumn()
   profile: Profile;
+
+  @OneToMany(() => Reservation , reservation => reservation.user)
+  reservations: Reservation[];
 
  
 }

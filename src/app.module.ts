@@ -8,6 +8,7 @@ import ormConfigProd from './config/orm.config.prod';
 import { AuthModule } from './auth/auth.module';
 import { ParkingSpacesModule } from './parking-spaces/parking-spaces.module';
 import { UsersModule } from './users/users.module';
+import { ReservationModule } from './reservation/reservation.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
     AuthModule,
     ParkingSpacesModule,
     UsersModule,
+    ReservationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
