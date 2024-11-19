@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { ParkingSpacesService } from './parking-spaces.service';
 import { CreateParkingSpaceDto } from './dto/create.parking-space.dto';
 import { UpdateParkingSpaceDto } from './dto/update.parking-space.dto';

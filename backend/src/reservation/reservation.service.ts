@@ -85,14 +85,33 @@ export class ReservationService {
    }
 
 
-   async findReservationById(id: number){
-    const reservation = await this.reservationRepo.findOne({ where: { id }, relations: ['user', 'parkingSpace'], }); 
+   async getUsersWithReservations(){
+    const reservation = await this.reservationRepo.find({ relations: ['user', 'parkingSpace'], }); 
 
     if (!reservation) { 
       throw new NotFoundException('Reservation not found'); 
     } 
     return reservation; 
 
+  }
+
+  async getReservationsInfo(){
+    const reservation = await this.reservationRepo.find({ relations: ['parkingSpace'], }); 
+
+    if (!reservation) { 
+      throw new NotFoundException('Reservation not found'); 
+    } 
+    return reservation; 
+
+  }
+
+  async getReservationById(id:number){
+    const reservation = await this.reservationRepo.findOne({where: {id}});
+
+    if (!reservation) { 
+      throw new NotFoundException('Reservation not found'); 
+    } 
+    return reservation; 
   }
   
 

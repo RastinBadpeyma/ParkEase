@@ -10,9 +10,14 @@ export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
 
+  @Get()
+  async findAll(){
+    return await this.reservationService.getReservationsInfo();
+  }
+
   @Get(':id')
   async findById(@Param('id' , ParseIntPipe) id: number ) {
-      return await this.reservationService.findReservationById(id);
+      return await this.reservationService.getReservationById(id);
   }
 
   @UseGuards(AuthGuardJwt)
