@@ -21,9 +21,6 @@ export class ParkingSpace {
    @Column({nullable:false })
    location: string ;
 
-   @Column()
-   isOccupied: boolean;
-
    @Column({default: false})
    pricePerHour: string;
 
