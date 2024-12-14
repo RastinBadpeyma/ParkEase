@@ -1,4 +1,4 @@
-import { Reservation } from "src/reservation/entities/reservation.entity";
+import { Reservation } from "../../reservation/entities/reservation.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 

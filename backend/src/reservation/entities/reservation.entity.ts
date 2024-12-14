@@ -1,6 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { ParkingSpace } from "src/parking-spaces/entities/parking-spaces.entity";
-import { User } from "src/users/entities/user.entity";
+import { ParkingSpace } from "../../parking-spaces/entities/parking-spaces.entity";
+import { User } from "../../users/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
