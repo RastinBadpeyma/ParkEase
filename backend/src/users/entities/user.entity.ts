@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Profile } from "../../auth/entities/profile.entity";
 import { Reservation } from "../../reservation/entities/reservation.entity";
-import { Role } from "src/auth/enums/roles.enum";
+import { Role } from "../../auth/enums/roles.enum";
 
 @Entity()
 export class User {

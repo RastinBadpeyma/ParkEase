@@ -2,12 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGua
 import { ReservationService } from './reservation.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
-import { ParkingSpacesService } from 'src/parking-spaces/parking-spaces.service';
-import { AuthGuardJwt } from 'src/auth/guards/auth-guard.jwt';
+import { ParkingSpacesService } from './../parking-spaces/parking-spaces.service';
+import { AuthGuardJwt } from './../auth/guards/auth-guard.jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/enums/roles.enum';
-import { RolesGuard } from 'src/auth/guards/roles-guard';
+import { Roles } from './../auth/decorators/roles.decorator';
+import { Role } from './../auth/enums/roles.enum';
+import { RolesGuard } from './../auth/guards/roles-guard';
 
 @Controller('reservation')
 export class ReservationController {

@@ -2,7 +2,7 @@ import {  Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CurrentUser } from "./current-user.decorator";
 import { User } from "../users/entities/user.entity";
-import { CreateUserDto } from "./input/create.user.dto";
+import { RegisterDto } from "./input/register.dto";
 import { AuthGuardLocal } from "./guards/auth-guard.local";
 import { AuthGuardJwt } from "./guards/auth-guard.jwt";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
@@ -33,8 +33,8 @@ export class AuthController {
    @ApiResponse({ status: 201, description: 'The user has been successfully registered.' }) 
    @ApiResponse({ status: 400, description: 'Bad Request.' })
      @Post('register')
-     async register(@Body() createUserDto: CreateUserDto){
-       const user =  await this.authService.register(createUserDto);
+     async register(@Body() registerDto: RegisterDto){
+       const user =  await this.authService.register(registerDto);
        return {token: this.authService.getTokenForUser(user)};
      }
    

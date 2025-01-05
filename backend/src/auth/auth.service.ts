@@ -2,8 +2,8 @@ import { JwtService } from "@nestjs/jwt";
 import { User } from "../users/entities/user.entity";
 import { BadRequestException, HttpException, Injectable } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
-import { UsersService } from "src/users/users.service";
-import { CreateUserDto } from "./input/create.user.dto";
+import { UsersService } from "./../users/users.service";
+import {RegisterDto } from "./input/register.dto";
 
 @Injectable()
 export class AuthService {
@@ -12,19 +12,19 @@ export class AuthService {
    private readonly usersService: UsersService,
   ){}
 
-  public async register(createUserDto: CreateUserDto){
-    const user = await this.usersService.findUserByEmail(createUserDto.email);
+  public async register(registerDto: RegisterDto){
+    const user = await this.usersService.findUserByEmail(registerDto.email);
 
     if(user){
       throw new HttpException('User already exists' , 400);
     }
-    if (createUserDto.password !== createUserDto.retypedPassword) {
+    if (registerDto.password !== registerDto.retypedPassword) {
       throw new BadRequestException('Passwords do not match');
     }
 
-    createUserDto.password = await this.hashPassword(createUserDto.password);
+    registerDto.password = await this.hashPassword(registerDto.password);
 
-    return await this.usersService.createUser(createUserDto);
+    return await this.usersService.registerUser(registerDto);
 
   }
 

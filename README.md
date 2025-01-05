@@ -66,4 +66,4 @@ docker-compose up -d
 ## Usage
 
 ### Accessing Swagger Documentation 
-You can access the Swagger API documentation at `http://localhost:3000/api`
+You can access the Swagger API documentation at `http://localhost:5000/api`

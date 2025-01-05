@@ -3,9 +3,9 @@ import { CreateReservationDto } from './dto/create-reservation.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from './entities/reservation.entity';
 import { LessThanOrEqual, MoreThanOrEqual, Repository, UpdateDescription } from 'typeorm';
-import { ParkingSpacesService } from 'src/parking-spaces/parking-spaces.service';
-import { ParkingSpace } from 'src/parking-spaces/entities/parking-spaces.entity';
-import { User } from 'src/users/entities/user.entity';
+import { ParkingSpacesService } from './../parking-spaces/parking-spaces.service';
+import { ParkingSpace } from './../parking-spaces/entities/parking-spaces.entity';
+import { User } from './../users/entities/user.entity';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 
 @Injectable()

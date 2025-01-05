@@ -2,11 +2,11 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGua
 import { ParkingSpacesService } from './parking-spaces.service';
 import { CreateParkingSpaceDto } from './dto/create.parking-space.dto';
 import { UpdateParkingSpaceDto } from './dto/update.parking-space.dto';
-import { AuthGuardJwt } from 'src/auth/guards/auth-guard.jwt';
+import { AuthGuardJwt } from './../auth/guards/auth-guard.jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { RolesGuard } from 'src/auth/guards/roles-guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/enums/roles.enum';
+import { RolesGuard } from './../auth/guards/roles-guard';
+import { Roles } from './../auth/decorators/roles.decorator';
+import { Role } from './../auth/enums/roles.enum';
 
 @Controller('parking-space')
 @UseGuards(AuthGuardJwt,RolesGuard)

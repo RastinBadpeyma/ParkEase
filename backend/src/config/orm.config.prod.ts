@@ -1,9 +1,9 @@
 import { registerAs } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Profile } from 'src/auth/entities/profile.entity';
-import { User } from 'src/users/entities/user.entity';
-import { ParkingSpace } from 'src/parking-spaces/entities/parking-spaces.entity';
-import { Reservation } from 'src/reservation/entities/reservation.entity';
+import { Profile } from './../auth/entities/profile.entity';
+import { User } from './../users/entities/user.entity';
+import { ParkingSpace } from './../parking-spaces/entities/parking-spaces.entity';
+import { Reservation } from './../reservation/entities/reservation.entity';
 
 
 export default registerAs(
