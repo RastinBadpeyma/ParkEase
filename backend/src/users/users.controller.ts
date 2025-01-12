@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { ClassSerializerInterceptor,Controller, Get, Post, Body, Patch, Param, Delete, UseGuards,UseInterceptors, SerializeOptions  } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuardJwt } from './../auth/guards/auth-guard.jwt';
 import { RolesGuard } from './../auth/guards/roles-guard';
@@ -8,7 +8,8 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 
 @Controller('users')
-@UseGuards(AuthGuardJwt,RolesGuard)
+ @UseGuards(AuthGuardJwt,RolesGuard)
+@SerializeOptions({ strategy: 'excludeAll' })
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -16,6 +17,7 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Return all users' })
   @Roles(Role.Admin)
   @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
     return this.usersService.findAll();
   }

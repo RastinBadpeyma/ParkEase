@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from './../auth/decorators/roles.decorator';
 import { Role } from './../auth/enums/roles.enum';
@@ -8,7 +8,7 @@ import { ReservationService } from './../reservation/reservation.service';
 
 
 @Controller('customers')
-@UseGuards(AuthGuardJwt,RolesGuard)
+ @UseGuards(AuthGuardJwt,RolesGuard)
 export class CustomersController {
   constructor(private readonly reservationService: ReservationService) {}
 
@@ -16,6 +16,7 @@ export class CustomersController {
   @ApiResponse({ status: 200, description: 'Return all customers.' })
   @Roles(Role.Admin)
   @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
     return  this.reservationService.getUsersWithReservations();
   }
