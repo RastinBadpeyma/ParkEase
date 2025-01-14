@@ -1,6 +1,6 @@
 import {  Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { CurrentUser } from "./current-user.decorator";
+import { CurrentUser } from "./decorators/current-user.decorator";
 import { User } from "../users/entities/user.entity";
 import { RegisterDto } from "./input/register.dto";
 import { AuthGuardLocal } from "./guards/auth-guard.local";
