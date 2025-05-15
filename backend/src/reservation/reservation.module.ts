@@ -8,10 +8,8 @@ import { ParkingSpace } from './../parking-spaces/entities/parking-spaces.entity
 import { User } from './../users/entities/user.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Reservation , ParkingSpace , User])
-  ],
+  imports: [TypeOrmModule.forFeature([Reservation, ParkingSpace, User])],
   controllers: [ReservationController],
-  providers: [ReservationService,ParkingSpacesService],
+  providers: [ReservationService, ParkingSpacesService],
 })
 export class ReservationModule {}

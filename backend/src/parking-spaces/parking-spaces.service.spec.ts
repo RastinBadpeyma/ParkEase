@@ -8,14 +8,14 @@ import { BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
 const parkingSpaceMocks: ParkingSpace[] = [
   {
     id: 1,
-    location: "Detroit",
-    pricePerHour: "$5",
+    location: 'Detroit',
+    pricePerHour: '$5',
     reservations: [],
   },
   {
     id: 2,
-    location: "Washington",
-    pricePerHour: "$7",
+    location: 'Washington',
+    pricePerHour: '$7',
     reservations: [],
   },
 ];
@@ -45,7 +45,9 @@ describe('ParkingSpacesService', () => {
     }).compile();
 
     service = module.get<ParkingSpacesService>(ParkingSpacesService);
-    repository = module.get<Repository<ParkingSpace>>(getRepositoryToken(ParkingSpace));
+    repository = module.get<Repository<ParkingSpace>>(
+      getRepositoryToken(ParkingSpace),
+    );
   });
 
   afterEach(() => {
@@ -59,10 +61,18 @@ describe('ParkingSpacesService', () => {
       mockRepository.create.mockReturnValue(parkingSpaceMocks[0]);
       mockRepository.save.mockResolvedValue(parkingSpaceMocks[0]);
 
-      const result = await service.createParkingSpace({ location: "Detroit", pricePerHour: "$5" });
+      const result = await service.createParkingSpace({
+        location: 'Detroit',
+        pricePerHour: '$5',
+      });
       expect(result).toEqual(parkingSpaceMocks[0]);
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { location: "Detroit" } });
-      expect(mockRepository.create).toHaveBeenCalledWith({ location: "Detroit", pricePerHour: "$5" });
+      expect(mockRepository.findOne).toHaveBeenCalledWith({
+        where: { location: 'Detroit' },
+      });
+      expect(mockRepository.create).toHaveBeenCalledWith({
+        location: 'Detroit',
+        pricePerHour: '$5',
+      });
       expect(mockRepository.save).toHaveBeenCalledWith(parkingSpaceMocks[0]);
     });
 
@@ -70,7 +80,7 @@ describe('ParkingSpacesService', () => {
       mockRepository.findOne.mockResolvedValue(parkingSpaceMocks[0]);
 
       await expect(
-        service.createParkingSpace({ location: "Detroit", pricePerHour: "$5" }),
+        service.createParkingSpace({ location: 'Detroit', pricePerHour: '$5' }),
       ).rejects.toThrow(BadRequestException);
     });
   });
@@ -103,19 +113,27 @@ describe('ParkingSpacesService', () => {
 
   describe('update', () => {
     it('should update and return the parking space', async () => {
-      const updatedParkingSpace = { ...parkingSpaceMocks[0], pricePerHour: "$6" };
+      const updatedParkingSpace = {
+        ...parkingSpaceMocks[0],
+        pricePerHour: '$6',
+      };
       mockRepository.preload.mockResolvedValue(updatedParkingSpace);
 
-      const result = await service.update(1, { pricePerHour: "$6" });
+      const result = await service.update(1, { pricePerHour: '$6' });
       expect(result).toEqual(updatedParkingSpace);
-      expect(mockRepository.preload).toHaveBeenCalledWith({ id: 1, pricePerHour: "$6" });
+      expect(mockRepository.preload).toHaveBeenCalledWith({
+        id: 1,
+        pricePerHour: '$6',
+      });
       expect(mockRepository.save).toHaveBeenCalledWith(updatedParkingSpace);
     });
 
     it('should throw an error if parking space not found', async () => {
       mockRepository.preload.mockResolvedValue(null);
 
-      await expect(service.update(1, { pricePerHour: "$6" })).rejects.toThrow(HttpException);
+      await expect(service.update(1, { pricePerHour: '$6' })).rejects.toThrow(
+        HttpException,
+      );
     });
   });
 

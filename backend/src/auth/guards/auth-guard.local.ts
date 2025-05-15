@@ -1,2 +1,2 @@
-import { AuthGuard } from "@nestjs/passport";
-export class AuthGuardLocal extends AuthGuard('local') { }
+import { AuthGuard } from '@nestjs/passport';
+export class AuthGuardLocal extends AuthGuard('local') {}

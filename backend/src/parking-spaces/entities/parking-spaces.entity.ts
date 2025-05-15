@@ -1,6 +1,5 @@
-import { Reservation } from "../../reservation/entities/reservation.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import { Reservation } from '../../reservation/entities/reservation.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 //  ParkingLocation    GreenWichSt = "GreenWichSt",
 //    FloeySquare = "FloeySquare",
@@ -9,22 +8,18 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 //    PacMutual = "PacMutual",
 //    HillSt = "HillSt",
 //    WilshireBlvd = "WilshireBlvd"
-   
-
 
 @Entity()
 export class ParkingSpace {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-   @PrimaryGeneratedColumn()
-   id: number;
+  @Column({ nullable: false })
+  location: string;
 
-   @Column({nullable:false })
-   location: string ;
+  @Column({ default: false })
+  pricePerHour: string;
 
-   @Column({default: false})
-   pricePerHour: string;
-
-   @OneToMany(() => Reservation, reservation => reservation.parkingSpace) 
-   reservations: Reservation[];
-
+  @OneToMany(() => Reservation, (reservation) => reservation.parkingSpace)
+  reservations: Reservation[];
 }

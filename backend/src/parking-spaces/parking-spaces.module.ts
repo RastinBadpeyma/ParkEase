@@ -9,12 +9,8 @@ import { Module } from '@nestjs/common';
 import { ParkingSpace } from './entities/parking-spaces.entity';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([ParkingSpace])
-    ],
-    controllers: [
-        ParkingSpacesController, ],
-    providers: [
-        ParkingSpacesService, ],
+  imports: [TypeOrmModule.forFeature([ParkingSpace])],
+  controllers: [ParkingSpacesController],
+  providers: [ParkingSpacesService],
 })
 export class ParkingSpacesModule {}

@@ -5,7 +5,6 @@ import { User } from './../users/entities/user.entity';
 import { ParkingSpace } from './../parking-spaces/entities/parking-spaces.entity';
 import { Reservation } from './../reservation/entities/reservation.entity';
 
-
 export default registerAs(
   'orm.config',
   (): TypeOrmModuleOptions => ({
@@ -15,7 +14,7 @@ export default registerAs(
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [User,Profile,ParkingSpace,Reservation],
-    synchronize: false
-  })
+    entities: [User, Profile, ParkingSpace, Reservation],
+    synchronize: false,
+  }),
 );

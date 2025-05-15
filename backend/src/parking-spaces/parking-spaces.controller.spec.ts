@@ -37,14 +37,19 @@ describe('ParkingSpacesController', () => {
 
   describe('createParking', () => {
     it('should create a new parking space', async () => {
-      const dto: CreateParkingSpaceDto = { location: 'Detroit', pricePerHour: '$5' };
+      const dto: CreateParkingSpaceDto = {
+        location: 'Detroit',
+        pricePerHour: '$5',
+      };
       const mockResult = { id: 1, ...dto };
 
       mockParkingSpacesService.createParkingSpace.mockResolvedValue(mockResult);
 
       const result = await controller.createParking(dto);
       expect(result).toEqual(mockResult);
-      expect(mockParkingSpacesService.createParkingSpace).toHaveBeenCalledWith(dto);
+      expect(mockParkingSpacesService.createParkingSpace).toHaveBeenCalledWith(
+        dto,
+      );
     });
   });
 
@@ -65,7 +70,12 @@ describe('ParkingSpacesController', () => {
 
   describe('getOne', () => {
     it('should return a single parking space', async () => {
-      const mockResult = { id: 1, location: 'Detroit', pricePerHour: '$5', reservations: [] };
+      const mockResult = {
+        id: 1,
+        location: 'Detroit',
+        pricePerHour: '$5',
+        reservations: [],
+      };
 
       mockParkingSpacesService.findOne.mockResolvedValue(mockResult);
 
@@ -84,7 +94,12 @@ describe('ParkingSpacesController', () => {
   describe('update', () => {
     it('should update and return the parking space', async () => {
       const dto: UpdateParkingSpaceDto = { pricePerHour: '$6' };
-      const mockResult = { id: 1, location: 'Detroit', pricePerHour: '$6', reservations: [] };
+      const mockResult = {
+        id: 1,
+        location: 'Detroit',
+        pricePerHour: '$6',
+        reservations: [],
+      };
 
       mockParkingSpacesService.update.mockResolvedValue(mockResult);
 
@@ -96,13 +111,17 @@ describe('ParkingSpacesController', () => {
     it('should throw an error if parking space not found', async () => {
       mockParkingSpacesService.update.mockResolvedValue(null);
 
-      await expect(controller.update(1, { pricePerHour: '$6' })).rejects.toThrow();
+      await expect(
+        controller.update(1, { pricePerHour: '$6' }),
+      ).rejects.toThrow();
     });
   });
 
   describe('deleteOne', () => {
     it('should delete a parking space and return success message', async () => {
-      mockParkingSpacesService.delete.mockResolvedValue('Parking space deleted successfully!');
+      mockParkingSpacesService.delete.mockResolvedValue(
+        'Parking space deleted successfully!',
+      );
 
       const result = await controller.deleteOne(1);
       expect(result).toEqual('Parking space deleted successfully!');

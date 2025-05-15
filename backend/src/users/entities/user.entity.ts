@@ -1,8 +1,15 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Profile } from "../../auth/entities/profile.entity";
-import { Reservation } from "../../reservation/entities/reservation.entity";
-import { Role } from "../../auth/enums/roles.enum";
-import { Expose , Exclude } from "class-transformer";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Profile } from '../../auth/entities/profile.entity';
+import { Reservation } from '../../reservation/entities/reservation.entity';
+import { Role } from '../../auth/enums/roles.enum';
+import { Expose, Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -33,17 +40,14 @@ export class User {
   @JoinColumn()
   profile: Profile;
 
-  
-  @Column({ 
-    type: 'enum', 
-    enum: Role, 
-  }) 
+  @Column({
+    type: 'enum',
+    enum: Role,
+  })
   @Expose()
   role: Role;
 
-  @OneToMany(() => Reservation , reservation => reservation.user)
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
   @Expose()
   reservations: Reservation[];
-
- 
 }
